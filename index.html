@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="/index.css">
   <title>Text-transform</title>
 </head>
 
@@ -16,17 +16,82 @@
       <div class="sidebar col s3">
         <ul class="collection">
           <li><a class="collection-item active" href="#replace">Replace</a></li>
-          <!-- <li><a class="collection-item" href="#transform">Transform</a></li> -->
-          <!-- <li><a class="collection-item" href="#replicate">Replicate</a></li> -->
+          <!-- <li><a class="collection-item" href="#transform">Transform</a></li>
+          <li><a class="collection-item" href="#replicate">Replicate</a></li> -->
+          <li><a class="collection-item" href="#beautify">Beautify</a></li>
+          <li><a class="collection-item" href="#duplicate-checker">Duplicate Checker</a></li>
+        </ul>
+        <ul class="collection">
           <li><a class="collection-item" href="#generate-restful">Generate Restful</a></li>
           <li><a class="collection-item" href="#generate-swagger">Generate Swagger</a></li>
           <li><a class="collection-item" href="#generate-js-api">Generate JS API</a></li>
           <li><a class="collection-item" href="#generate-apache">Generate Apache</a></li>
           <li><a class="collection-item" href="#generate-jwt">Generate JWT</a></li>
           <li><a class="collection-item" href="#generate-phpclass">Generate PHP Class</a></li>
+          <!-- <li><a class="collection-item" href="#time-sep">Time Separator</a></li> -->
+        </ul>
+        <ul class="collection">
+          <li><a class="collection-item" href="#generate-gamejam">Game Jam Theme Generator</a></li>
         </ul>
       </div>
       <div class="main-content col s9">
+        <!-- Game Jam Theme Generator -->
+        <div class="tab-content" id="tab_generate-gamejam">
+          <div class="row">
+            <div class="col s12">
+              <div class="input-field">
+                <input id="generate-gamejam_genre" type="text" value="0" readonly>
+                <label for="generate-gamejam_genre">Genre</label>
+              </div>
+            </div>
+            <div class="col s6">
+              <div class="input-field">
+                <input id="generate-gamejam_genre2" type="text" value="0" readonly>
+                <label for="generate-gamejam_genre2">Genre 2</label>
+              </div>
+            </div>
+            <div class="col s6">
+              <div class="input-field">
+                <input id="generate-gamejam_genre3" type="text" value="0" readonly>
+                <label for="generate-gamejam_genre3">Genre 3</label>
+              </div>
+            </div>
+            <div class="col s12">
+              <div class="input-field">
+                <input id="generate-gamejam_lead" type="text" value="0" readonly>
+                <label for="generate-gamejam_lead">Lead</label>
+              </div>
+            </div>
+            <div class="col s6">
+              <div class="input-field">
+                <input id="generate-gamejam_lead2" type="text" value="0" readonly>
+                <label for="generate-gamejam_lead2">Lead Height</label>
+              </div>
+            </div>
+            <div class="col s6">
+              <div class="input-field">
+                <input id="generate-gamejam_lead3" type="text" value="0" readonly>
+                <label for="generate-gamejam_lead3">Lead walk/run</label>
+              </div>
+            </div>
+            <div class="col s12">
+              <div class="input-field">
+                <input id="generate-gamejam_setting" type="text" value="0" readonly>
+                <label for="generate-gamejam_setting">Setting</label>
+              </div>
+            </div>
+            <div class="col s12">
+              <div class="input-field">
+                <input id="generate-gamejam_platform" type="text" value="0" readonly>
+                <label for="generate-gamejam_platform">Platform</label>
+              </div>
+            </div>
+          </div>
+          <div class="space-above">
+            <button type="button" class="waves-effect waves-light btn js-btn-generate-gamejam">Randomize</button>
+          </div>
+        </div>
+
         <!-- Replace -->
         <div class="tab-content active" id="tab_replace">
           <div class="row">
@@ -84,39 +149,29 @@
             <div class="col s12">
               <div class="input-field">
                 <textarea id="transform_text" class="materialize-textarea"></textarea>
-                <label for="ttransform_ext">Text</label>
+                <label for="transform_text">Text</label>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col s12">
               <div class="space-below">
-                <button type="button" class="waves-effect waves-light btn btn-transform-text"
-                  data-operation="uppercase">Uppercase</button>
-                <button type="button" class="waves-effect waves-light btn btn-transform-text"
-                  data-operation="lowercase">Lowercase</button>
-                <button type="button" class="waves-effect waves-light btn btn-transform-text"
-                  data-operation="capitalize">Capitalize</button>
-                <button type="button" class="waves-effect waves-light btn btn-transform-text"
-                  data-operation="ucToCc" title="under_score to camelCase">u_c to cC</button>
+                <button type="button" class="waves-effect waves-light btn btn-transform-text" data-operation="uppercase">Uppercase</button>
+                <button type="button" class="waves-effect waves-light btn btn-transform-text" data-operation="lowercase">Lowercase</button>
+                <button type="button" class="waves-effect waves-light btn btn-transform-text" data-operation="capitalize">Capitalize</button>
+                <button type="button" class="waves-effect waves-light btn btn-transform-text" data-operation="ucToCc" title="under_score to camelCase">u_c to cC</button>
               </div>
               <div class="space-below">
-                <button type="button" class="waves-effect waves-light btn btn-transform-text"
-                  data-operation="sepToCc" title="Sep/arate to camelCase">Sep to cC</button>
-                <button type="button" class="waves-effect waves-light btn btn-transform-text" data-operation="dashToCs"
-                  title="Dash to Capitalize with space">Dash to Cs</button>
+                <button type="button" class="waves-effect waves-light btn btn-transform-text" data-operation="sepToCc" title="Sep/arate to camelCase">Sep to cC</button>
+                <button type="button" class="waves-effect waves-light btn btn-transform-text" data-operation="dashToCs" title="Dash to Capitalize with space">Dash to Cs</button>
               </div>
               <div class="space-below">
-                <button type="button" class="waves-effect waves-light btn btn-transform-text"
-                  data-operation="rmKeys">Remove keys</button>
-                <button type="button" class="waves-effect waves-light btn btn-transform-text"
-                  data-operation="rmValues">Remove values</button>
-                <button type="button" class="waves-effect waves-light btn btn-transform-text"
-                  data-operation="addValues">Add values</button>
+                <button type="button" class="waves-effect waves-light btn btn-transform-text" data-operation="rmKeys">Remove keys</button>
+                <button type="button" class="waves-effect waves-light btn btn-transform-text" data-operation="rmValues">Remove values</button>
+                <button type="button" class="waves-effect waves-light btn btn-transform-text" data-operation="addValues">Add values</button>
               </div>
               <div class="space-below">
-                <button type="button" class="waves-effect waves-light btn btn-transform-text"
-                  data-operation="sortTextAsc">Sort Asc</button>
+                <button type="button" class="waves-effect waves-light btn btn-transform-text" data-operation="sortTextAsc">Sort Asc</button>
               </div>
             </div>
           </div>
@@ -139,6 +194,18 @@
               <div class="input-field">
                 <textarea id="replicate_text" class="materialize-textarea"></textarea>
                 <label for="replicate_text">text</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <div class="switch">
+                <label>
+                  Initial text excluded
+                  <input type="checkbox" class="js-replicate-include-initial">
+                  <span class="lever"></span>
+                  Included
+                </label>
               </div>
             </div>
           </div>
@@ -192,14 +259,19 @@
           </div>
           <div class="row">
             <div class="col s12">
-              <div class="input-field">
-                <textarea id="replicate_result" class="materialize-textarea" readonly></textarea>
-                <label for="replicate_result">Result</label>
-              </div>
+              <button type="button" id="btn_replicate" class="waves-effect waves-light btn">Submit</button>
             </div>
           </div>
-          <div class="space-above">
-            <button type="button" id="btn_replicate" class="waves-effect waves-light btn">Submit</button>
+          <div class="row">
+            <div class="col s12">
+              <label>Result</label>
+              <div class="card">
+                <button type="button" class="btn-floating btn-large waves-effect waves-light btn-copy-to-clipboard js-btn-copy-to-clipboard" title="Copy">
+                  <img src="/img/copy-regular.svg" alt="copy" height="15">
+                </button>
+                <div id="replicate_result" class="card-content indent result-wrapper"></div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -222,10 +294,8 @@
             <div class="col s12 space-above">
               <label>Result</label>
               <div class="card">
-                <button type="button"
-                  class="btn-floating btn-large waves-effect waves-light btn-copy-to-clipboard js-btn-copy-to-clipboard"
-                  title="Copy">
-                  <img src="img/copy-regular.svg" alt="copy" height="15">
+                <button type="button" class="btn-floating btn-large waves-effect waves-light btn-copy-to-clipboard js-btn-copy-to-clipboard" title="Copy">
+                  <img src="/img/copy-regular.svg" alt="copy" height="15">
                 </button>
                 <div id="generate-restful_result" class="card-content indent result-wrapper"></div>
               </div>
@@ -258,10 +328,8 @@
             <div class="col s12 space-above">
               <label>Result</label>
               <div class="card">
-                <button type="button"
-                  class="btn-floating btn-large waves-effect waves-light btn-copy-to-clipboard js-btn-copy-to-clipboard"
-                  title="Copy">
-                  <img src="img/copy-regular.svg" alt="copy" height="15">
+                <button type="button" class="btn-floating btn-large waves-effect waves-light btn-copy-to-clipboard js-btn-copy-to-clipboard" title="Copy">
+                  <img src="/img/copy-regular.svg" alt="copy" height="15">
                 </button>
                 <div id="generate-swagger_result" class="card-content indent result-wrapper"></div>
               </div>
@@ -294,10 +362,8 @@
             <div class="col s12 space-above">
               <label>Result</label>
               <div class="card">
-                <button type="button"
-                  class="btn-floating btn-large waves-effect waves-light btn-copy-to-clipboard js-btn-copy-to-clipboard"
-                  title="Copy">
-                  <img src="img/copy-regular.svg" alt="copy" height="15">
+                <button type="button" class="btn-floating btn-large waves-effect waves-light btn-copy-to-clipboard js-btn-copy-to-clipboard" title="Copy">
+                  <img src="/img/copy-regular.svg" alt="copy" height="15">
                 </button>
                 <div class="card-content indent result-wrapper js-js-api-result"></div>
               </div>
@@ -317,6 +383,18 @@
           </div>
           <div class="row">
             <div class="col s12">
+              <div class="switch">
+                <label>
+                  Regular
+                  <input type="checkbox" class="apache-ssl-check">
+                  <span class="lever"></span>
+                  SSL
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
               <button type="button" class="waves-effect waves-light btn js-btn-generate-apache">Submit</button>
             </div>
           </div>
@@ -324,12 +402,19 @@
             <div class="col s12 space-above">
               <label>Result</label>
               <div class="card">
-                <button type="button"
-                  class="btn-floating btn-large waves-effect waves-light btn-copy-to-clipboard js-btn-copy-to-clipboard"
-                  title="Copy">
-                  <img src="img/copy-regular.svg" alt="copy" height="15">
+                <div class="card-content indent result-wrapper js-apache-files-result"></div>
+              </div>
+              <div class="card">
+                <button type="button" class="btn-floating btn-large waves-effect waves-light btn-copy-to-clipboard js-btn-copy-to-clipboard" title="Copy">
+                  <img src="/img/copy-regular.svg" alt="copy" height="15">
                 </button>
                 <div class="card-content indent result-wrapper js-apache-result"></div>
+              </div>
+              <div class="card">
+                <button type="button" class="btn-floating btn-large waves-effect waves-light btn-copy-to-clipboard js-btn-copy-to-clipboard" title="Copy">
+                  <img src="/img/copy-regular.svg" alt="copy" height="15">
+                </button>
+                <div class="card-content indent result-wrapper js-apache-ssl-result"></div>
               </div>
             </div>
           </div>
@@ -360,10 +445,8 @@
             <div class="col s12 space-above">
               <label>Result</label>
               <div class="card">
-                <button type="button"
-                  class="btn-floating btn-large waves-effect waves-light btn-copy-to-clipboard js-btn-copy-to-clipboard"
-                  title="Copy">
-                  <img src="img/copy-regular.svg" alt="copy" height="15">
+                <button type="button" class="btn-floating btn-large waves-effect waves-light btn-copy-to-clipboard js-btn-copy-to-clipboard" title="Copy">
+                  <img src="/img/copy-regular.svg" alt="copy" height="15">
                 </button>
                 <div class="card-content indent result-wrapper js-jwt-result"></div>
               </div>
@@ -431,16 +514,126 @@
             <div class="col s12 space-above">
               <label>Result</label>
               <div class="card">
-                <button type="button"
-                  class="btn-floating btn-large waves-effect waves-light btn-copy-to-clipboard js-btn-copy-to-clipboard"
-                  title="Copy">
-                  <img src="img/copy-regular.svg" alt="copy" height="15">
+                <button type="button" class="btn-floating btn-large waves-effect waves-light btn-copy-to-clipboard js-btn-copy-to-clipboard" title="Copy">
+                  <img src="/img/copy-regular.svg" alt="copy" height="15">
                 </button>
                 <div class="card-content indent result-wrapper js-phpclass-result"></div>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- Beautify -->
+        <div class="tab-content" id="tab_beautify">
+          <div class="row">
+            <div class="col s12">
+              <div class="input-field">
+                <textarea id="beautify_text" class="materialize-textarea js-beautify-text"></textarea>
+                <label for="beautify_text">Text</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <button type="button" class="waves-effect waves-light btn js-btn-beautify" data-operation="json">JSON</button>
+              <button type="button" class="waves-effect waves-light btn js-btn-beautify" data-operation="php-array">PHP Array</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <div class="">
+                <label>Result</label>
+                <div class="card">
+                  <div class="card-content indent js-beautify-result"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Time-sep -->
+        <div class="tab-content" id="tab_time-sep">
+          <div class="row">
+            <div class="col s4">
+              100%
+            </div>
+            <div class="col s4">
+              Time
+            </div>
+            <div class="col s4">
+              <div class="input-group">
+                <div class="value-button btn" id="decrease" onclick="decreaseValue()" title="Decrease Value">-</div>
+                <input type="number" id="number" value="0" />
+                <div class="value-button btn" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <div class="input-field">
+                <textarea id="beautify_text" class="materialize-textarea js-beautify-text"></textarea>
+                <label for="beautify_text">Text</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <button type="button" class="waves-effect waves-light btn js-btn-beautify" data-operation="json">JSON</button>
+              <button type="button" class="waves-effect waves-light btn js-btn-beautify" data-operation="php-array">PHP Array</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <div class="">
+                <label>Result</label>
+                <div class="card">
+                  <div class="card-content indent js-beautify-result"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Duplicate Checker -->
+        <div class="tab-content" id="tab_duplicate-checker">
+          <div class="row">
+            <div class="col s12">
+              <div class="input-field">
+                <textarea id="duplicate-checker_text" class="materialize-textarea js-duplicate-checker-text"></textarea>
+                <label for="duplicate-checker_text">Text</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <div class="switch">
+                <label>
+                  Single Quote
+                  <input type="checkbox" class="js-duplicate-checker-quote">
+                  <span class="lever"></span>
+                  Double
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <button type="button" class="waves-effect waves-light btn js-btn-process-duplicate">Process</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12 space-above">
+              <label>Result</label>
+              <div class="card">
+                <button type="button" class="btn-floating btn-large waves-effect waves-light btn-copy-to-clipboard js-btn-copy-to-clipboard" title="Copy">
+                  <img src="/img/copy-regular.svg" alt="copy" height="15">
+                </button>
+                <div class="card-content indent result-wrapper js-duplicate-checker-result"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -457,7 +650,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/hmac-sha256.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/enc-base64.min.js"></script>
 
-  <script src="index.js" type="text/javascript" charset="utf-8" async defer></script>
+  <script src="/index.js" type="text/javascript" charset="utf-8" async defer></script>
 </body>
 
 </html>

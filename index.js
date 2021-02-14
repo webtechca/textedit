@@ -47,7 +47,6 @@ var moduleTextTransform = (function () {
   }
 
   function handleReplicate() {
-    $('#replicate_result + label').addClass('active');
     var text = $('#replicate_text').val();
     var replications = [];
     var replication = {};
@@ -65,8 +64,13 @@ var moduleTextTransform = (function () {
       replications.push(replication);
     }
     var output = replicate(text, replications);
+
+    if ($('.js-replicate-include-initial').prop('checked')) {
+      output = text + "\n" + output;
+    }
+
     output = output.trim();
-    document.getElementById('replicate_result').textContent = output;
+    document.getElementById('replicate_result').innerHTML = output;
   }
 
   function printResult(selectorName, content) {
@@ -303,7 +307,7 @@ var moduleHelper = (function () {
 
 var moduleApiHelper = (function () {
   function copyToClipboard() {
-    var $result = $(this).closest('.row').find('.result-wrapper');
+    var $result = $(this).closest('.card').find('.result-wrapper');
     var text = $result.text();
     $('.js-clipboard-text').val(text);
     $('.js-clipboard-text').select();
@@ -712,49 +716,106 @@ var moduleApiHelper = (function () {
 
 var moduleApacheConfig = (function () {
   function handleGenerateConfigs() {
-    var output = '';
-    var domain = $('#generate-apache_domain').val();
+    let output = '';
+    let outputFiles = '';
+    let outputSsl = '';
+    let domain = $('#generate-apache_domain').val();
+    let isSslEnabled = $('.apache-ssl-check').prop('checked');
+    let outputRedirect = '';
 
-    output =
-      `
-    <VirtualHost *:80>
-            # The ServerName directive sets the request scheme, hostname and port that
-            # the server uses to identify itself. This is used when creating
-            # redirection URLs. In the context of virtual hosts, the ServerName
-            # specifies what hostname must appear in the request's Host: header to
-            # match this virtual host. For the default virtual host (this file) this
-            # value is not decisive as it is used as a last resort host regardless.
-            # However, you must set it for any further virtual host explicitly.
+    outputFiles = `
+vim ${domain}.conf
+vim ${domain}-le-ssl.conf
+a2ensite ${domain}-le-ssl.conf
+`;
 
-            ServerName ${domain}.webnest.site
+    if (isSslEnabled) {
+      outputRedirect = `
+        RewriteEngine on
+        RewriteCond %{SERVER_NAME} =${domain}.webnest.site
+        RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]`;
+    }
 
-            ServerAdmin webmaster@localhost
-            DocumentRoot /var/www/${domain}
+    output = `
+<VirtualHost *:80>
+        # The ServerName directive sets the request scheme, hostname and port that
+        # the server uses to identify itself. This is used when creating
+        # redirection URLs. In the context of virtual hosts, the ServerName
+        # specifies what hostname must appear in the request's Host: header to
+        # match this virtual host. For the default virtual host (this file) this
+        # value is not decisive as it is used as a last resort host regardless.
+        # However, you must set it for any further virtual host explicitly.
 
-            # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
-            # error, crit, alert, emerg.
-            # It is also possible to configure the loglevel for particular
-            # modules, e.g.
-            #LogLevel info ssl:warn
+        ServerName ${domain}.webnest.site
 
-            ErrorLog \${APACHE_LOG_DIR}/error.log
-            CustomLog \${APACHE_LOG_DIR}/access.log combined
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/${domain}
 
-            # For most configuration files from conf-available/, which are
-            # enabled or disabled at a global level, it is possible to
-            # include a line for only one particular virtual host. For example the
-            # following line enables the CGI configuration for this host only
-            # after it has been globally disabled with "a2disconf".
-            #Include conf-available/serve-cgi-bin.conf
-    </VirtualHost>
-    <Directory /var/www/${domain}>
-            Options Indexes FollowSymLinks
-            AllowOverride All
-            Require all granted
-    </Directory>
-    `;
+        # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+        # error, crit, alert, emerg.
+        # It is also possible to configure the loglevel for particular
+        # modules, e.g.
+        #LogLevel info ssl:warn
 
-    $('.js-apache-result').text(output);
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+
+        # For most configuration files from conf-available/, which are
+        # enabled or disabled at a global level, it is possible to
+        # include a line for only one particular virtual host. For example the
+        # following line enables the CGI configuration for this host only
+        # after it has been globally disabled with "a2disconf".
+        #Include conf-available/serve-cgi-bin.conf
+        ${outputRedirect}
+</VirtualHost>
+<Directory /var/www/${domain}>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+</Directory>`;
+
+    outputSsl = `
+<IfModule mod_ssl.c>
+<VirtualHost *:443>
+        # The ServerName directive sets the request scheme, hostname and port that
+        # the server uses to identify itself. This is used when creating
+        # redirection URLs. In the context of virtual hosts, the ServerName
+        # specifies what hostname must appear in the request's Host: header to
+        # match this virtual host. For the default virtual host (this file) this
+        # value is not decisive as it is used as a last resort host regardless.
+        # However, you must set it for any further virtual host explicitly.
+
+        ServerName ${domain}.webnest.site
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/${domain}
+
+        # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+        # error, crit, alert, emerg.
+        # It is also possible to configure the loglevel for particular
+        # modules, e.g.
+        #LogLevel info ssl:warn
+
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+
+        # For most configuration files from conf-available/, which are
+        # enabled or disabled at a global level, it is possible to
+        # include a line for only one particular virtual host. For example the
+        # following line enables the CGI configuration for this host only
+        # after it has been globally disabled with "a2disconf".
+        #Include conf-available/serve-cgi-bin.conf
+
+        SSLCertificateFile /etc/letsencrypt/live/${domain}.webnest.site/fullchain.pem
+        SSLCertificateKeyFile /etc/letsencrypt/live/${domain}.webnest.site/privkey.pem
+        Include /etc/letsencrypt/options-ssl-apache.conf
+</VirtualHost>
+</IfModule>`;
+
+    // trim is messing up indentation, so don't trim() mindlessly
+    $('.js-apache-files-result').text(outputFiles.trim());
+    $('.js-apache-result').text(output.trim());
+    $('.js-apache-ssl-result').text(outputSsl.trim());
   }
 
   return {
@@ -926,7 +987,6 @@ var modulePhpClass = (function () {
     let properties = '';
     let methods = '';
     let property = {};
-    let text = '';
     let capitalisedText = '';
     for (let i = 0, l = classObject.properties.length; i < l; i++) {
       property = classObject.properties[i];
@@ -978,8 +1038,118 @@ var modulePhpClass = (function () {
   };
 })();
 
+var moduleBeautify = (function () {
+  function handleBeautify() {
+    let text = $('.js-beautify-text').val();
+    let choice = $(this).data('operation');
+    let output = '';
+    if (choice === 'json') {
+      output = JSON.parse(text);
+      output = JSON.stringify(output, null, 2);
+    } else {
+      output = text;
+    }
+    $('.js-beautify-result').text(output);
+  }
+
+  return {
+    handleBeautify,
+  };
+})();
+
+var moduleDuplicateChecker = (function () {
+  function handleProcess() {
+    let text = $('.js-duplicate-checker-text').val();
+    let singleQuote = $('.js-duplicate-checker-quote').prop('checked');
+    let output = '';
+    let textArray = text.split("\n");
+    let dataArray = [];
+    let processedText = '';
+    let hasDuplicate = false;
+    let duplicateData = [];
+
+    for (var i = 0, l = textArray.length; i < l; i++) {
+      if (textArray[i].trim() === '') {
+        continue;
+      }
+      processedText = extractFirstText(textArray[i], singleQuote);
+      // processedText = textArray[i];
+      if (dataArray.indexOf(processedText) > -1) {
+        hasDuplicate = true;
+        duplicateData.push(processedText);
+      } else {
+        dataArray.push(processedText);
+      }
+    }
+    output += 'Has Duplicate: ' + (hasDuplicate ? 'YES' : 'NO');
+    output += "\n";
+    output += duplicateData.join("\n");
+
+    $('.js-duplicate-checker-result').text(output);
+  }
+
+  function extractFirstText(str, singleQuote) {
+    const matches = singleQuote ? str.match(/'(.*?)'/) : str.match(/"(.*?)"/);
+    return matches
+      ? matches[1]
+      : str;
+  }
+
+  function extractAllText(str, singleQuote) {
+    const re = singleQuote ? /'(.*?)'/g : /"(.*?)"/g;
+    const result = [];
+    let current;
+    while (current = re.exec(str)) {
+      result.push(current.pop());
+    }
+    return result.length > 0
+      ? result
+      : [str];
+  }
+
+  return {
+    handleProcess,
+  };
+})();
+
+var moduleGameJam = (function () {
+  function handleRandomize() {
+    const leads = ['Male', 'Female'];
+    const leads2 = ['Shibi', 'Normal'];
+    const leads3 = ['Walk', 'Run'];
+    const genres = ['Platformer', 'Topdown', 'Fighting'];
+    const genres2 = ['Real-time Action', 'Turn-based'];
+    const genres3 = [ 'Fighting', 'Puzzle', 'Racing', 'Tactical'];
+    const settings = ['Distant Future', 'World War'];
+    const platforms = ['Mobile', 'Pc'];
+
+    let lead = leads[Math.floor(Math.random() * leads.length)];
+    let lead2 = leads2[Math.floor(Math.random() * leads2.length)];
+    let lead3 = leads3[Math.floor(Math.random() * leads3.length)];
+    let genre = genres[Math.floor(Math.random() * genres.length)];
+    let genre2 = genres2[Math.floor(Math.random() * genres2.length)];
+    let genre3 = genres3[Math.floor(Math.random() * genres3.length)];
+    let platform = platforms[Math.floor(Math.random() * platforms.length)];
+    let setting = settings[Math.floor(Math.random() * settings.length)];
+
+    $('#generate-gamejam_lead').val(lead);
+    $('#generate-gamejam_lead2').val(lead2);
+    $('#generate-gamejam_lead3').val(lead3);
+    $('#generate-gamejam_genre').val(genre);
+    $('#generate-gamejam_genre2').val(genre2);
+    $('#generate-gamejam_genre3').val(genre3);
+    $('#generate-gamejam_platform').val(platform);
+    $('#generate-gamejam_setting').val(setting);
+  }
+
+  return {
+    handleRandomize,
+  };
+})();
+
 $(document)
   .ready(moduleIndex.ready)
+  .ready(moduleGameJam.handleRandomize)
   // clicks
   .on('click', '.collection-item', moduleIndex.navigateTab)
   .on('click', '.btn-transform-text', moduleTextTransform.handleChoice)
@@ -993,4 +1163,7 @@ $(document)
   .on('click', '.js-btn-add-phpclass-property', modulePhpClass.handleAddProperty)
   .on('click', '.js-btn-phpclass-remove-property', modulePhpClass.handleRemoveProperty)
   .on('click', '.js-btn-generate-phpclass', modulePhpClass.handleGenerateClass)
+  .on('click', '.js-btn-beautify', moduleBeautify.handleBeautify)
+  .on('click', '.js-btn-process-duplicate', moduleDuplicateChecker.handleProcess)
+  .on('click', '.js-btn-generate-gamejam', moduleGameJam.handleRandomize)
   .on('click', '#btn_generate-swagger', moduleApiHelper.handleGenerateSwaggerYaml);
