@@ -51,3 +51,7 @@ textarea.materialize-textarea.result-wrapper,
   padding-top: 30px;
   padding-bottom: 30px;
 }
+
+.waves-effect img {
+  top: -4px;
+}
