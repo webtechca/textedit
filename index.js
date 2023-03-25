@@ -1112,6 +1112,40 @@ var moduleDuplicateChecker = (function () {
   };
 })();
 
+var moduleExtractDomains = (function () {
+  function handleProcess() {
+    // let text = $('.js-extract-domains-text').val();
+    let output = '';
+
+    // Example input string
+    const inputString = $('.js-extract-domains-text').val();
+    // const inputString = "Check out this website: https://www.example.com and this one: http://subdomain.example.com/path. Also, don't forget about https://www.another-example.com!";
+
+    // Regular expression to match URLs
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+    // Extract all URLs from input string
+    const urls = inputString.match(urlRegex);
+
+    if (urls === null || urls === undefined) {
+      $('.js-extract-domains-result').text(output);
+      return;
+    }
+
+    // Extract unique domain names from URLs
+    const uniqueDomains = [...new Set(urls.map(url => new URL(url).hostname))];
+
+    output = uniqueDomains.join("\n");
+
+
+    $('.js-extract-domains-result').text(output);
+  }
+
+  return {
+    handleProcess,
+  };
+})();
+
 var moduleGameJam = (function () {
   function handleRandomize() {
     const leads = ['Male', 'Female'];
@@ -1165,5 +1199,6 @@ $(document)
   .on('click', '.js-btn-generate-phpclass', modulePhpClass.handleGenerateClass)
   .on('click', '.js-btn-beautify', moduleBeautify.handleBeautify)
   .on('click', '.js-btn-process-duplicate', moduleDuplicateChecker.handleProcess)
+  .on('click', '.js-btn-process-extract-domains', moduleExtractDomains.handleProcess)
   .on('click', '.js-btn-generate-gamejam', moduleGameJam.handleRandomize)
   .on('click', '#btn_generate-swagger', moduleApiHelper.handleGenerateSwaggerYaml);

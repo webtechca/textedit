@@ -7,7 +7,7 @@
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" href="index.css">
-  <title>Text-transform</title>
+  <title>Textedit</title>
 
   <link rel="icon"  href="favicon.ico"/>
 </head>
@@ -22,6 +22,7 @@
           <li><a class="collection-item" href="#replicate">Replicate</a></li> -->
           <li><a class="collection-item" href="#beautify">Beautify</a></li>
           <li><a class="collection-item" href="#duplicate-checker">Duplicate Checker</a></li>
+          <li><a class="collection-item" href="#extract-domains">Extracts unique domains</a></li>
         </ul>
         <ul class="collection">
           <li><a class="collection-item" href="#generate-restful">Generate Restful</a></li>
@@ -631,6 +632,34 @@
                   <img src="img/copy-regular.svg" alt="copy" height="15">
                 </button>
                 <div class="card-content indent result-wrapper js-duplicate-checker-result"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Extract Unique Domains -->
+        <div class="tab-content" id="tab_extract-domains">
+          <div class="row">
+            <div class="col s12">
+              <div class="input-field">
+                <textarea id="extract-domains_text" class="materialize-textarea js-extract-domains-text"></textarea>
+                <label for="extract-domains_text">Text</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <button type="button" class="waves-effect waves-light btn js-btn-process-extract-domains">Process</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12 space-above">
+              <label>Result</label>
+              <div class="card">
+                <button type="button" class="btn-floating btn-large waves-effect waves-light btn-copy-to-clipboard js-btn-copy-to-clipboard" title="Copy">
+                  <img src="img/copy-regular.svg" alt="copy" height="15">
+                </button>
+                <div class="card-content indent result-wrapper js-extract-domains-result"></div>
               </div>
             </div>
           </div>
