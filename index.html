@@ -23,6 +23,7 @@
           <li><a class="collection-item" href="#beautify">Beautify</a></li>
           <li><a class="collection-item" href="#duplicate-checker">Duplicate Checker</a></li>
           <li><a class="collection-item" href="#extract-domains">Extracts unique domains</a></li>
+          <li><a class="collection-item" href="#transform-colornarnia">Transform for Colornarnia</a></li>
         </ul>
         <ul class="collection">
           <li><a class="collection-item" href="#generate-restful">Generate Restful</a></li>
@@ -548,6 +549,36 @@
                 <label>Result</label>
                 <div class="card">
                   <div class="card-content indent js-beautify-result"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transform Colornarnia -->
+        <div class="tab-content" id="tab_transform-colornarnia">
+          <div class="row">
+            <div class="col s12">
+              <div class="input-field">
+                <textarea id="transform-colornarnia_text" class="materialize-textarea js-transform-colornarnia-text"></textarea>
+                <label for="transform-colornarnia_text">Text</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <button type="button" class="waves-effect waves-light btn js-btn-transform-colornarnia">Transform</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <div class="">
+                <label>Result</label>
+                <div class="card">
+                    <button type="button" class="btn-floating btn-large waves-effect waves-light btn-copy-to-clipboard js-btn-copy-to-clipboard" title="Copy">
+                      <img src="img/copy-regular.svg" alt="copy" height="15">
+                    </button>
+                    <div class="card-content indent result-wrapper js-transform-colornarnia-result"></div>
                 </div>
               </div>
             </div>
