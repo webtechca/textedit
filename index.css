@@ -2,51 +2,64 @@
   position: sticky;
   top: 60px;
 }
+
 .space-above {
   margin-top: 30px;
 }
+
 .tab-content {
   display: none;
 }
+
 .tab-content.active {
   display: block;
 }
+
 .space-below {
   margin-bottom: 30px;
 }
+
 .indent {
   white-space: pre-wrap;
 }
+
 textarea.materialize-textarea.result-wrapper,
 .result-wrapper {
   max-height: 500px;
   overflow-y: auto;
 }
+
 .btn-floating.btn-large.btn-copy-to-clipboard,
 .btn-copy-to-clipboard {
   height: 40px;
   width: 40px;
   float: right;
 }
+
 .hide-in-left-corner {
   position: absolute;
   left: -500px;
 }
+
 .row .col.main-content,
 .main-content {
   min-height: 450px;
 }
+
 .input-field select {
   display: inline-block;
 }
+
 .custom-btn-height-42 {
   height: 42px;
 }
+
 .custom-label-title {
   font-size: 30px;
   font-weight: 400;
   color: black;
 }
+
 .container {
   padding-top: 30px;
   padding-bottom: 30px;

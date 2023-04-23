@@ -885,7 +885,7 @@ var modulePhpClass = (function () {
     let visibility = $('.js-phpclass-select-visibility').val();
     let type = $('.js-phpclass-select-type').val();
     let output =
-    `
+      `
     <div class="row">
       <div class="col s3 js-phpclass-property-name">${name}</div>
       <div class="col s3 js-phpclass-property-visibility">${visibility}</div>
@@ -991,7 +991,7 @@ var modulePhpClass = (function () {
     for (let i = 0, l = classObject.properties.length; i < l; i++) {
       property = classObject.properties[i];
       properties +=
-      `
+        `
       /**
        *
        * @var ${property.type}
@@ -1001,7 +1001,7 @@ var modulePhpClass = (function () {
 
       capitalisedText = moduleTextTransform.ucfirst(property.name);
       methods +=
-      `
+        `
       public function get${capitalisedText}(): ?${property.type} {
         return $this->${property.name};
       }
@@ -1017,7 +1017,7 @@ var modulePhpClass = (function () {
     methods = methods.trim();
 
     output =
-    `
+      `
     class ${definition} {
       ${properties}
 
@@ -1169,7 +1169,7 @@ var moduleGameJam = (function () {
     const leads3 = ['Walk', 'Run'];
     const genres = ['Platformer', 'Topdown', 'Fighting'];
     const genres2 = ['Real-time Action', 'Turn-based'];
-    const genres3 = [ 'Fighting', 'Puzzle', 'Racing', 'Tactical'];
+    const genres3 = ['Fighting', 'Puzzle', 'Racing', 'Tactical'];
     const settings = ['Distant Future', 'World War'];
     const platforms = ['Mobile', 'Pc'];
 
