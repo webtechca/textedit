@@ -1218,4 +1218,7 @@ $(document)
   .on('click', '.js-btn-process-duplicate', moduleDuplicateChecker.handleProcess)
   .on('click', '.js-btn-process-extract-domains', moduleExtractDomains.handleProcess)
   .on('click', '.js-btn-generate-gamejam', moduleGameJam.handleRandomize)
-  .on('click', '#btn_generate-swagger', moduleApiHelper.handleGenerateSwaggerYaml);
+  .on('click', '#btn_generate-swagger', moduleApiHelper.handleGenerateSwaggerYaml)
+  // inputs
+  .on('input', '.js-transform-colornarnia-text', moduleTransformColornarnia.handleTransformColornarnia)
+  ;
