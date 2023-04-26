@@ -1057,22 +1057,6 @@ var moduleBeautify = (function () {
   };
 })();
 
-var moduleTransformColornarnia = (function () {
-  function handleTransformColornarnia() {
-    let text = $('.js-transform-colornarnia-text').val();
-    let transformedText = text.replace(/\\/g, '/')
-      .replace(/ /g, '%20')
-      .slice(2);
-    let output = `![AltText](../../../..${transformedText} "${text}")`;
-
-    $('.js-transform-colornarnia-result').text(output);
-  }
-
-  return {
-    handleTransformColornarnia,
-  };
-})();
-
 var moduleDuplicateChecker = (function () {
   function handleProcess() {
     let text = $('.js-duplicate-checker-text').val();
@@ -1214,11 +1198,8 @@ $(document)
   .on('click', '.js-btn-phpclass-remove-property', modulePhpClass.handleRemoveProperty)
   .on('click', '.js-btn-generate-phpclass', modulePhpClass.handleGenerateClass)
   .on('click', '.js-btn-beautify', moduleBeautify.handleBeautify)
-  .on('click', '.js-btn-transform-colornarnia', moduleTransformColornarnia.handleTransformColornarnia)
   .on('click', '.js-btn-process-duplicate', moduleDuplicateChecker.handleProcess)
   .on('click', '.js-btn-process-extract-domains', moduleExtractDomains.handleProcess)
   .on('click', '.js-btn-generate-gamejam', moduleGameJam.handleRandomize)
   .on('click', '#btn_generate-swagger', moduleApiHelper.handleGenerateSwaggerYaml)
-  // inputs
-  .on('input', '.js-transform-colornarnia-text', moduleTransformColornarnia.handleTransformColornarnia)
   ;
